@@ -5,8 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const PRODUCTS_LIST_ENDPOINT = process.env.REACT_APP_PRODUCTS_LIST_ENDPOINT;
-const PRODUCTS_CREATE_ENDPOINT = process.env.REACT_APP_PRODUCTS_CREATE_ENDPOINT;
-const PRODUCTS_UPDATE_ENDPOINT = process.env.REACT_APP_PRODUCTS_UPDATE_ENDPOINT;
 const VENDORS_LIST_ENDPOINT = process.env.REACT_APP_VENDORS_LIST_ENDPOINT;
 
 const Product = () => {
@@ -77,95 +75,6 @@ const Product = () => {
     };
     if (file) {
       reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Verificar que todos los campos estén completos
-    if (
-      !newProduct.name ||
-      !newProduct.description ||
-      !newProduct.precioCosto ||
-      !newProduct.precioVenta ||
-      !newProduct.vendorId
-    ) {
-      toast.error('Por favor, complete todos los campos.');
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}${PRODUCTS_CREATE_ENDPOINT}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(newProduct)
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        if (data.object === null) {
-          setErrorMessage('Producto ya existe. Por favor, verifique los datos.');
-          toast.error('Producto ya existe. Por favor, verifique los datos.');
-        } else {
-          setSuccessMessage(data.message);
-          setProducts(prevProducts => [...prevProducts, data.object]);
-          handleClear();
-          toast.success('Producto guardado con éxito');
-        }
-      } else {
-        toast.error('Error al guardar el producto: ' + data.message);
-      }
-    } catch (error) {
-      console.error('Error al guardar el producto:', error);
-      toast.error('Error al guardar el producto');
-    }
-  };
-
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    // Verificar que todos los campos estén completos
-    if (
-      !newProduct.name ||
-      !newProduct.description ||
-      !newProduct.precioCosto ||
-      !newProduct.precioVenta ||
-      !newProduct.vendorId
-    ) {
-      toast.error('Por favor, complete todos los campos.');
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}${PRODUCTS_UPDATE_ENDPOINT}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(newProduct)
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        if (data.object === null) {
-          setErrorMessage('Producto no encontrado. Por favor, verifique los datos.');
-          toast.error('Producto no encontrado. Por favor, verifique los datos.');
-        } else {
-          setSuccessMessage(data.message);
-          setProducts(prevProducts => prevProducts.map(product => 
-            product.id === data.object.id ? data.object : product
-          ));
-          handleClear();
-          toast.success('Producto actualizado con éxito');
-        }
-      } else {
-        toast.error('Error al actualizar el producto: ' + data.message);
-      }
-    } catch (error) {
-      toast.error('Error al actualizar el producto');
     }
   };
 
