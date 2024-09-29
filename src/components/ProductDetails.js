@@ -8,14 +8,7 @@ const ProductDetails = ({ products, vendors, onRowClick }) => {
   const getVendorName = (vendorId) => {
     const vendor = vendors.find(v => v.id === vendorId);
     return vendor ? vendor.name : 'Desconocido';
-  };
-
-  const getStatusStyle = (status) => {
-    return {
-      color: status === 1 ? 'green' : 'gray',
-      fontWeight: 'bold'
-    };
-  };
+  }; 
 
   // Filtrar productos con estatus activo (status === 1)
   const activeProducts = products.filter(product => product.status === 1);
