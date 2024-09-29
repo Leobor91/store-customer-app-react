@@ -27,7 +27,6 @@ const ProductDetails = ({ products, vendors, onRowClick }) => {
           {product.image && <img src={product.image} alt={product.name} className="product-image" />}
           <h3>{product.name}</h3>
           <p><strong>Descripción:</strong> {product.description}</p>
-          <p><strong>Precio Costo:</strong> {product.precioCosto ? parseFloat(product.precioCosto).toFixed(2) : 'N/A'}</p>
           <p><strong>Precio Venta:</strong> {product.precioVenta ? parseFloat(product.precioVenta).toFixed(2) : 'N/A'}</p>
           <p><strong>Proveedor:</strong> {getVendorName(product.vendorId)}</p>
         </div>
