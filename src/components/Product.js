@@ -11,7 +11,7 @@ const Product = () => {
   const [products, setProducts] = useState([]);
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newProduct, setNewProduct] = useState({
+  const [setNewProduct] = useState({
     id: '',
     name: '',
     description: '',
@@ -22,10 +22,10 @@ const Product = () => {
     vendorId: '',
     image: ''
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [showForm, setShowForm] = useState(false); // Estado para controlar la visibilidad del formulario
+  const [ setIsEditing] = useState(false);
+  const [errorMessage, ] = useState('');
+  const [successMessage, ] = useState('');
+  const [ setShowForm] = useState(false); 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,56 +56,11 @@ const Product = () => {
     fetchVendors();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewProduct(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setNewProduct(prevState => ({
-        ...prevState,
-        image: reader.result
-      }));
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleRowClick = (product) => {
     setNewProduct(product);
     setIsEditing(true);
     setShowForm(true); // Mostrar el formulario al seleccionar un producto
-  };
-
-  const handleClear = () => {
-    setNewProduct({
-      id: '',
-      name: '',
-      description: '',
-      status: 1,
-      stock: '',
-      precioCosto: '',
-      precioVenta: '',
-      vendorId: '',
-      image: ''
-    });
-    setIsEditing(false);
-    setErrorMessage('');
-    setSuccessMessage('');
-    setShowForm(false); // Ocultar el formulario al limpiar
-  };
-
-  const handleCreateNewProduct = () => {
-    handleClear();
-    setShowForm(true); // Mostrar el formulario al hacer clic en "Crear Producto Nuevo"
-  };
+  };   
 
   return (
     <div>
